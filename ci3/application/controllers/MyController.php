@@ -56,8 +56,41 @@ class MyController extends CI_Controller {
     public function dashboard()
 	{
         $this->load->view('admin/header');
-        $this->load->view('admin/mainpage');
+        $this->load->view('admin/admin_dash');
         $this->load->view('admin/footer');
+	}
+
+    public function listallusers()
+	{
+        $AllUsers = $this->db->get('users')->result();
+        // echo "<pre>";
+        // print_r($AllUsers);
+        $data['hello'] = 'hello world';
+        $data['AllUsers'] = $AllUsers;
+        $this->load->view('admin/header');
+        $this->load->view('admin/listallusers', $data);
+        $this->load->view('admin/footer');
+	}
+
+    public function addnewuser()
+	{
+        $this->load->view('admin/header');
+        $this->load->view('admin/addnewuser');
+        $this->load->view('admin/footer');
+                
+        if ($this->input->post('uname')) {
+            $data = $this->input->post();
+            $response = $this->db->insert('users', $data);
+            // echo "<pre>";
+            // print_r($data);
+            if ($response == 1) {
+                header('location:addnewuser');
+            } else {
+                echo "Erro while Registering";
+            }
+            
+        }
+
 	}
 
     public function signup()
