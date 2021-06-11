@@ -1,4 +1,11 @@
+<?php
 
+if ($_SESSION['logindata']['role_id'] !=1) {
+	header("location: index");
+}
+// echo $_SESSION['logindata'] ;
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -184,11 +191,10 @@
                 </a>
                 <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
                   <li class="user-info">
-                    <h5 class="user-name"><?php  echo ($_SESSION['UserData']->user_name);?></h5>
+                    <h5 class="user-name"></h5>
                     <span class="status ml-2">Available</span>
                   </li>
                   <li> <a href="editadminprod"><i class="lnr lnr-user"></i>My Profile</a> </li>
-                 
                   <li class="logout"> <a href="signout"><i class="fa fa-power-off"></i> Logout</a> </li>
                 </ul>
               </li>

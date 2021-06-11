@@ -35,7 +35,7 @@ class MyController extends CI_Controller {
 
             if(count($response)> 0){
 
-            $this->session->set_userdata($response[0]);
+            $this->session->set_userdata(array("logindata"=>$response[0]));
             // echo "<pre>";
             // print_r($response); //for role_id display
 
@@ -51,6 +51,12 @@ class MyController extends CI_Controller {
                 </script>
             <?php }
         }
+	}
+
+    public function signout()
+	{
+        $this->session->unset_userdata('logindata');
+        header('location:signin');
 	}
 
     public function dashboard()

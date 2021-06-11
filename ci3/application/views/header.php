@@ -1,3 +1,5 @@
+
+
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
@@ -116,7 +118,11 @@ $(document).ready(function() {
 					<li class="dropdown head-dpdn">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i> My Account<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="<?php  echo base_url(); ?>mycontroller/signin">Login </a></li> 
+							<?php if(isset($_SESSION['logindata'])){ ?>
+								<li><a href="<?php  echo base_url(); ?>mycontroller/signout">Logout </a></li> 
+							<?php } else { ?> 
+								<li><a href="<?php  echo base_url(); ?>mycontroller/signin">Login </a></li>
+							<?php } ?>
 							<li><a href="<?php  echo base_url(); ?>mycontroller/signup">Sign Up</a></li> 
 							<li><a href="login.html">My Orders</a></li>  
 							<li><a href="login.html">Wallet</a></li> 
