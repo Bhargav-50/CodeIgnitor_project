@@ -3,11 +3,12 @@
 		<div class="container"> 
 			<h3 class="w3ls-title w3ls-title1">Create your account</h3>  
 			<div class="login-body">
-				<form action="#" method="post">
+				<form action="#" method="post" enctype="multipart/form-data">
 					<input type="text" class="user" name="uname" placeholder="Enter your Name" >
 					<input type="text" class="user" name="email" placeholder="Enter your email" >
 					<input type="password" name="pass" class="lock" placeholder="Password" >
                     <input type="text" name="mobile" placeholder="Your Mobile Number" >
+					<input type="file" name="pro_pic" class="form-control mt-2" id="pro_pic" placeholder="Enter your mobile">
 
 					<?php echo validation_errors('<div class="error alert alert-danger">', '</div>'); ?>
 

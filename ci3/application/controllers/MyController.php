@@ -136,6 +136,7 @@ class MyController extends CI_Controller {
         $this->form_validation->set_rules('email', 'email', 'required');
         $this->form_validation->set_rules('pass', 'password', 'required');
         $this->form_validation->set_rules('mobile', 'Mobile', 'required');
+        $this->form_validation->set_rules('pro_pic', 'Profile picture', 'required');
 
         if ($this->form_validation->run() == FALSE)
     {
@@ -146,13 +147,27 @@ class MyController extends CI_Controller {
         return false;
     }else 
     {
-        echo "valid";
+        // echo "valid";
                 
         if ($this->input->post('uname')) {
             $data = $this->input->post();
             $response = $this->db->insert('users', $data);
             // echo "<pre>";
             // print_r($data);
+            // print_r($_FILES);
+
+            $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'gif|jpg|png';
+                $config['max_size']             = 100;
+                // $config['max_width']            = 1024;
+                // $config['max_height']           = 768;
+
+                $this->load->library('upload', $config);
+
+                $this->upload->do_upload('pro_pic');
+
+                
+
             if ($response == 1) {
                 header('location:addnewuser');
             } else {
@@ -198,7 +213,7 @@ public function signup()
 
     $this->form_validation->set_rules('uname', 'Username', 'required');
     $this->form_validation->set_rules('email', 'email', 'required');
-    $this->form_validation->set_rules('pass', 'password', 'required');
+    $this->form_validation->set_rules('pass', 'password', 'required ');
     $this->form_validation->set_rules('mobile', 'Mobile', 'required');
 
     if ($this->form_validation->run() == FALSE)

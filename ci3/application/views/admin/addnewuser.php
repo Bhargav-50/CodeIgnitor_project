@@ -45,10 +45,12 @@
                             <input type="text" name="mobile" class="form-control mt-2" id="mobile" placeholder="Enter your mobile">
                         </div>
                     </div>
-
-                    
-
                     <div class="row">
+                        <div class="col-md-12">
+                            <input type="file" name="pro_pic" class="form-control mt-2" id="pro_pic" placeholder="Enter your mobile">
+                        </div>
+                    </div>
+                     <div class="row">
                         <div class="col-md-12 mt-2">
                             <input type="submit" class="btn btn-info" id="btn-login" value="Registration">
                             <input type="submit" class="btn btn-danger" value="Cancel" >
