@@ -49,7 +49,7 @@ print_r($AllUsers);
                       <td><?php echo $value->mobile; ?></td>
                       <td>
                         <a class="btn btn-sm btn-primary" href="edit?id=<?php echo $value->user_id; ?>">Edit</a>
-                        <a class="btn btn-sm btn-danger" href="delete?id=<?php echo $value->user_id; ?>">Delete</a>
+                        <a class="btn btn-sm btn-danger" href="deleteuserbyadmin?id=<?php echo $value->user_id; ?>">Delete</a>
                       </td>
                     </tr>
                     <?php  } ?>

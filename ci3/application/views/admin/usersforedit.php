@@ -27,7 +27,8 @@
       <form method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="text" name="uname" value= "<?php echo $UserDataById['Data'][0]->user_name; ?>" class="form-control mt-2" id="name" placeholder="Enter your name">
+                        <!-- <?php    echo $UserDataById['Data'][0]->user_name; ?> -->
+                            <input type="text" name="uname" value= "" class="form-control mt-2" id="name" placeholder="Enter your name">
                         </div>
                     </div>
                     <!-- <div class="row">
@@ -37,27 +38,17 @@
                     </div> -->
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="text" name="email" value= "<?php echo $UserDataById['Data'][0]->email; ?>" class="form-control mt-2" id="email" placeholder="Enter your email">
+                            <input type="text" name="email" value= "" class="form-control mt-2" id="email" placeholder="Enter your email">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 mt-2">
-                            <input type="radio" name="gender" <?php if ($UserDataById['Data'][0]->gender == 'Male') { echo "checked"; } ?> id="male"><label for="Male">Male</label>
-                            <input type="radio" name="gender" <?php if ($UserDataById['Data'][0]->gender == 'Female') { echo "checked"; } ?> id="Female"><label for="Female">Female</label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <input type="text" name="mobile" class="form-control mt-2" value= "<?php echo $UserDataById['Data'][0]->mobile; ?>" id="mobile" placeholder="Enter your mobile">
+                            <input type="text" name="mobile" class="form-control mt-2" value= "" id="mobile" placeholder="Enter your mobile">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <input type="file" name="pro_pic" class="form-control mt-2" value= "<?php echo $UserDataById['Data'][0]->email; ?>" id="pro_pic" placeholder="Enter your mobile">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 mt-2">
+                        <div class="col-md-12 mt-5">
                             <input type="submit" class="btn btn-info" name="btn-save" id="btn-login" value="Update">
                             <input type="submit" class="btn btn-danger" value="Cancel" >
                         </div>

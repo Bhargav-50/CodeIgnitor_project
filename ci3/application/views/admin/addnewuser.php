@@ -46,13 +46,15 @@
                         </div>
                     </div>
 
+                    
+
                     <div class="row">
                         <div class="col-md-12 mt-2">
                             <input type="submit" class="btn btn-info" id="btn-login" value="Registration">
                             <input type="submit" class="btn btn-danger" value="Cancel" >
                         </div>
                     </div>
-                    
+                    <?php echo validation_errors('<div class="error alert alert-danger">', '</div>'); ?>
                     </form>
       </div>
     </div>

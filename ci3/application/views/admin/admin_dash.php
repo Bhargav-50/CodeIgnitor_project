@@ -23,7 +23,7 @@
           <div class="col-sm-6 pr-sm-2 statistics-grid">
             <div class="card card_border border-primary-top p-4">
               <i class="lnr lnr-users"> </i>
-              <h3 class="text-primary number">51.25 K</h3>
+              <h3 class="text-primary number"><?php  echo count($AllUsers); ?></h3>
               <p class="stat-text">Total Users</p>
             </div>
           </div>
