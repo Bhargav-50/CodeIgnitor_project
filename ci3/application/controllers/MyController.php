@@ -115,69 +115,106 @@ class MyController extends CI_Controller {
         // $this->input->get('user_id');
         // $this->uri->segment(3,0);
         // echo "<pre>";
-        // print_r($this->uri->segment[3]);        
+        // print_r($this->uri->segment(3));        
 
-        $u_id = print_r($this->uri->segment(3));
+        $u_id = $this->uri->segment(3);
         $response = $this->db->delete('users' , array('user_id' => $u_id));
+        echo "<pre>";
+        print_r($response); 
         if ($response == 1) {
-            header('location: listallusers ');
+            redirect('mycontroller/listallusers');
         }else{
             echo "Error while inserting";
         }
     }
 
+//addnewuser with validation and profile images
 
-    public function addnewuser()
-	{
+    public function addnewuser(){
 
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('uname', 'Username', 'required');
-        $this->form_validation->set_rules('email', 'email', 'required');
-        $this->form_validation->set_rules('pass', 'password', 'required');
-        $this->form_validation->set_rules('mobile', 'Mobile', 'required');
-        $this->form_validation->set_rules('pro_pic', 'Profile picture', 'required');
+		$this->form_validation->set_rules("uname","Username","required");
+		$this->form_validation->set_rules("email","Email","required|valid_email");
+		$this->form_validation->set_rules("mobile","Mobile","required|integer");
+		$this->form_validation->set_rules("pass","Password","required|min_length[3]|max_length[12]");
+		if($this->form_validation->run()==FALSE){
+			$this->load->view('admin/header');
+			$this->load->view('admin/addnewuser');
+			$this->load->view('admin/footer');
+		}else{
+			
+			if ($this->input->post("uname")) {
+				$data=$this->input->post();
+				$config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'jpeg|jpg|png';
+				$this->load->library('upload', $config);
+				if($this->upload->do_upload('pro_pic')){
+					$img=$this->upload->data();
+					$data=array_merge($data,array("pro_pic"=>$img['file_name']));
+					$InsetRes=$this->db->insert('users',$data);
+					if ($InsetRes==1) {
+						redirect('mycontroller/listallusers');
+					}else{
+						echo '<script>alert("Registration not success.")</script>';
+					}
 
-        if ($this->form_validation->run() == FALSE)
-    {
-        
-        $this->load->view('admin/header');
-        $this->load->view('admin/addnewuser');
-        $this->load->view('admin/footer');
-        return false;
-    }else 
-    {
-        // echo "valid";
-                
-        if ($this->input->post('uname')) {
-            $data = $this->input->post();
-            $response = $this->db->insert('users', $data);
-            // echo "<pre>";
-            // print_r($data);
-            // print_r($_FILES);
-
-            $config['upload_path']          = './uploads/';
-                $config['allowed_types']        = 'gif|jpg|png';
-                $config['max_size']             = 100;
-                // $config['max_width']            = 1024;
-                // $config['max_height']           = 768;
-
-                $this->load->library('upload', $config);
-
-                $this->upload->do_upload('pro_pic');
-
-                
-
-            if ($response == 1) {
-                header('location:addnewuser');
-            } else {
-                echo "Erro while Registering";
-            }
-            
-        }
-    }
-
+				}else{				
+					$senddata=array_merge(array("error"=>$this->upload->display_errors()),$senddata);
+				}				
+			}
+			$this->load->view('admin/header');
+			$this->load->view('admin/listallusers',$senddata);
+			$this->load->view('admin/footer');
+		}	
 	}
+
+
+
+//Form validation and inset
+
+    // public function addnewuser()
+	// {
+  
+  
+    // $this->load->library('form_validation');
+
+    // $this->form_validation->set_rules('uname', 'Username', 'required');
+    // $this->form_validation->set_rules('email', 'email', 'required');
+    // $this->form_validation->set_rules('pass', 'password', 'required');
+    // $this->form_validation->set_rules('mobile', 'Mobile', 'required');
+
+    // if ($this->form_validation->run() == FALSE)
+    // {
+        
+    //     $this->load->view('admin/header');
+    //     $this->load->view('admin/addnewuser');
+    //     $this->load->view('admin/footer');
+    //     return false;
+    // }else 
+    // {
+    //     echo "valid";
+    
+    // if ($this->input->post('uname')) {
+    //     $data = $this->input->post();
+    //     $response = $this->db->insert('users', $data);
+    //     // print_r($this->db->last_query());  last query print
+    //     // print_r($response); 
+    //     // echo "called";
+    //     if ($response == 1) {
+    //         header('location:addnewuser');
+    //     } else {
+    //         echo "Erro while Registering";
+    //     }
+        
+    //     }   
+    // }
+  
+  
+    // }
+
+//Regular code for registration
+
 
 //     public function signup()
 // 	{
@@ -204,43 +241,82 @@ class MyController extends CI_Controller {
 // 	}
 // }
 
-//Registration form validation
+////Registation with validation and profile images
 
-public function signup()
-{
+public function signup(){
 
     $this->load->library('form_validation');
 
-    $this->form_validation->set_rules('uname', 'Username', 'required');
-    $this->form_validation->set_rules('email', 'email', 'required');
-    $this->form_validation->set_rules('pass', 'password', 'required ');
-    $this->form_validation->set_rules('mobile', 'Mobile', 'required');
-
-    if ($this->form_validation->run() == FALSE)
-    {
-        
+    $this->form_validation->set_rules("uname","Username","required");
+    $this->form_validation->set_rules("email","Email","required|valid_email");
+    $this->form_validation->set_rules("mobile","Mobile","required|integer");
+    $this->form_validation->set_rules("pass","Password","required|min_length[3]|max_length[12]");
+    if($this->form_validation->run()==FALSE){
         $this->load->view('header');
         $this->load->view('registartion');
         $this->load->view('footer');
-        return false;
-    }else 
-    {
-        echo "valid";
-    
-    if ($this->input->post('uname')) {
-        $data = $this->input->post();
-        $response = $this->db->insert('users', $data);
-        // print_r($this->db->last_query());  last query print
-        // print_r($response); 
-        // echo "called";
-        if ($response == 1) {
-            header('location:signin');
-        } else {
-            echo "Erro while Registering";
-        }
+    }else{
         
-        }   
-    }
+        if ($this->input->post("uname")) {
+            $data=$this->input->post();
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'jpeg|jpg|png';
+            $this->load->library('upload', $config);
+            if($this->upload->do_upload('pro_pic')){
+                $img=$this->upload->data();
+                $data=array_merge($data,array("pro_pic"=>$img['file_name']));
+                $InsetRes=$this->db->insert('users',$data);
+                if ($InsetRes==1) {
+                    Redirect(base_url("mycontroller/signin"));
+                }else{
+                    echo '<script>alert("Registration not success.")</script>';
+                }
+
+            }else{				
+                $senddata=array_merge(array("error"=>$this->upload->display_errors()),$senddata);
+            }				
+        }
+        $this->load->view('header');
+        $this->load->view('login');
+        $this->load->view('footer');
+    }	
 }
+
+// public function signup()
+// {
+
+//     $this->load->library('form_validation');
+
+//     $this->form_validation->set_rules('uname', 'Username', 'required');
+//     $this->form_validation->set_rules('email', 'email', 'required');
+//     $this->form_validation->set_rules('pass', 'password', 'required');
+//     $this->form_validation->set_rules('mobile', 'Mobile', 'required');
+
+//     if ($this->form_validation->run() == FALSE)
+//     {
+        
+//         $this->load->view('header');
+//         $this->load->view('registartion');
+//         $this->load->view('footer');
+//         return false;
+//     }else 
+//     {
+//         echo "valid";
+    
+//     if ($this->input->post('uname')) {
+//         $data = $this->input->post();
+//         $response = $this->db->insert('users', $data);
+//         // print_r($this->db->last_query());  last query print
+//         // print_r($response); 
+//         // echo "called";
+//         if ($response == 1) {
+//             header('location:signin');
+//         } else {
+//             echo "Erro while Registering";
+//         }
+        
+//         }   
+//     }
+// }
 
 }
